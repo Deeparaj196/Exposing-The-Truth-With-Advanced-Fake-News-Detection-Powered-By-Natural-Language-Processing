@@ -1,0 +1,63 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "fcBkQ9Qd7FOQ",
+        "outputId": "10047ddc-64ee-42b4-ed4d-67253b2ff68a",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Original text: This is an example of a news article with some punctuation and stop words.\n",
+            "Cleaned text: example news article punctuation stop word\n"
+          ]
+        }
+      ],
+      "source": [
+        "import re\n",
+        "import nltk\n",
+        "from nltk.corpus import stopwords\n",
+        "from nltk.stem import WordNetLemmatizer\n",
+        "\n",
+        "nltk.download('stopwords', quiet=True)\n",
+        "nltk.download('wordnet', quiet=True)\n",
+        "lemmatizer = WordNetLemmatizer()\n",
+        "stop_words = set(stopwords.words('english'))\n",
+        "\n",
+        "def clean_text(text):\n",
+        "    text = text.lower()\n",
+        "    text = re.sub(r'[^a-zA-Z\\s]', '', text) # Remove punctuation and numbers\n",
+        "    tokens = text.split()\n",
+        "    tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words]\n",
+        "    return \" \".join(tokens)\n",
+        "\n",
+        "# Example usage\n",
+        "text = \"This is an example of a news article with some punctuation and stop words.\"\n",
+        "cleaned_text = clean_text(text)\n",
+        "print(f\"Original text: {text}\")\n",
+        "print(f\"Cleaned text: {cleaned_text}\")"
+      ]
+    }
+  ]
+}
